@@ -15,8 +15,8 @@ CON
         _clkmode = xtal1 + pll16x                                               'Standard clock mode * crystal frequency = 80 MHz
         _xinfreq = 5_000_000
 
-        '_conclkfreq = ((_clkmode - xtal1) >> 6) + _xinfreq                     'comment out if incorporated into main prog
-        '_ms001 = _conclkfreq / 1_000                                           'comment out this also
+        _conclkfreq = ((_clkmode - xtal1) >> 6) + _xinfreq                     'comment out if incorporated into main prog
+        _ms001 = _conclkfreq / 1_000                                           'comment out this also
 
         'Pin and Baudrate asgnmnt
 
@@ -41,7 +41,7 @@ CON
 
 VAR
   long  cgMtr, corestk[128]
-  long  _ms001
+  'long  _ms001
 
 OBJ
   'UART init
@@ -50,7 +50,7 @@ OBJ
 
 PUB start(mainMS, mtrCmd, mtrSpd)                       'start new cog
 
-  _ms001 := mainMS                                      'main MS val from main prog
+  '_ms001 := mainMS                                      'main MS val from main prog
 
   stp                                                   'stop current cog if vals remain in running cog
 
@@ -64,7 +64,7 @@ PUB mtrInstruct(mtrCmd, mtrSpd)
 
   repeat
     case LONG[mtrCmd]
-      0:
+      1:
         stp
       11:
         fwd(long[mtrSpd])
@@ -95,34 +95,59 @@ PUB mtrInstruct(mtrCmd, mtrSpd)
       38:
         cfr(long[mtrSpd])
       39:
-        cfb(long[mtrSpd])
+        cbr(long[mtrSpd])
 
-{
-PUB main | i
+
+{PUB main | i                                            'debug
 
   init
 
   'test stp, fwd and rvs vals
   repeat
-    cfl(25)
+    ckw(25)
     pause(50000)
     stp
     pause(10000)
-    cbl(25)
+    ccw(25)
     pause(50000)
     stp
     pause(10000)
-    cfr(25)
+    fwd(25)
     pause(50000)
     stp
     pause(10000)
-    cbrs(25)
+    bkd(25)
+    pause(50000)
+    stp
+    pause(10000)
+    dfl(25)
+    pause(50000)
+    stp
+    pause(10000)
+    dbl(25)
+    pause(50000)
+    stp
+    pause(10000)
+    dfr(25)
+    pause(50000)
+    stp
+    pause(10000)
+    dbr(25)
+    pause(50000)
+    stp
+    pause(10000)
+    lsf(25)
+    pause(50000)
+    stp
+    pause(10000)
+    rsf(25)
     pause(50000)
     stp
     pause(10000)
 
+ }
   'TODO - check why the pause ms val +1 x 10
-}
+
 
 PUB cogstp                                              'cogstop
 
