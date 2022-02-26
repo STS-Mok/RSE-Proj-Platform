@@ -66,6 +66,8 @@ PUB instr(cthead, ctDir, ctSpd, ctcs)
           comm.tx(commACK)
           dir := ctDir
           spd := ctSpd
+        else
+          comm.tx(commERR)
       else
         comm.tx(commERR)
 
