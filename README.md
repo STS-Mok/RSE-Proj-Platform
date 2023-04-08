@@ -14,7 +14,7 @@ The end product of this module demands a functional land-based, teleoperated, se
 
 ## RSE 1202 ##
 
-Second module of the project started in Jan 2022. Ongoing module.
+Second module of the project started in Jan 2022. Ended in Mar 2022.
 
 Aims to further enhance capabilities and start to delve in industrial practices as well, taking note to safety functions and using checksum in commucation.
 
